@@ -192,7 +192,6 @@ TOM_ALERT_CLASSES = [
     'tom_alerts.brokers.mars.MARSBroker',
     'tom_alerts.brokers.lasair.LasairBroker',
     'tom_alerts.brokers.scout.ScoutBroker',
-    'tom_alerts.brokers.antares.AntaresBroker'
 ]
 
 EXTRA_FIELDS = [
@@ -220,6 +219,7 @@ DATA_TYPES = (
 
 TOM_FACILITY_CLASSES = [
     'tom_observations.facilities.lco.LCOFacility',
+    'tom_education.facilities.EducationLCOFacility'
 ]
 
 TOM_EDUCATION_TIMELAPSE_SETTINGS = {
