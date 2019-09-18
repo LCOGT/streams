@@ -1,25 +1,16 @@
 {% extends 'tom_common/base.html' %}
-{% load static targets_extras observation_extras dataproduct_extras tom_common_extras %}
+{% load static tom_education_extras  %}
 {% block title %}Home{% endblock %}
 {% block content %}
 <div class="row">
   <div class="col-md-8">
     <p class="text-center"><img src="{% static 'streams/img/logo-colour.png' %}" class="img-fluid mx-auto"></p>
-
+    <p>
+    <a href="{% url 'tom_education:target_create' %}" class="btn btn-success">Add New Target</a>
+    </p>
+    {% target_latest_active %}
   </div>
   <div class="col-md-4">
-    <div class="card">
-      <div class="card-header">
-        Latest Comments
-      </div>
-      {% recent_comments %}
-    </div>
-    <br/>
-    <div class="card">
-      <div class="card-header">
-        Latest Targets
-      </div>
-      {% recent_targets %}
-  </div>
+    {% observationrecord_latest %}
 </div>
 {% endblock %}
