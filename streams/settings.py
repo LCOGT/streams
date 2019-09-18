@@ -7,15 +7,9 @@ import os
 import sys
 import tempfile
 
-from django.utils.crypto import get_random_string
-
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.environ.get('SECRET_KEY','')
-if not SECRET_KEY:
-    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
-    SECRET_KEY = get_random_string(50, chars)
+SECRET_KEY = os.environ['SECRET_KEY']
 
 DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'False'))
 
@@ -251,10 +245,14 @@ TOM_EDUCATION_PIPELINES = {
     'astrosource': 'tom_astrosource.models.AstrosourceProcess'
 }
 
-# Example Dramatiq configuration using Redis on localhost:6379
+REDIS_HOSTNAME = os.environ['REDIS_HOSTNAME']
+
+# Example Dramatiq configuration using Redis
 DRAMATIQ_BROKER = {
     'BROKER': 'dramatiq.brokers.redis.RedisBroker',
-    'OPTIONS': {'url': 'redis://localhost:6379'},
+    'OPTIONS': {
+        'url': f'redis://{REDIS_HOSTNAME}:6379',
+    },
     'MIDDLEWARE': [
         'dramatiq.middleware.AgeLimit',
         'dramatiq.middleware.TimeLimit',
