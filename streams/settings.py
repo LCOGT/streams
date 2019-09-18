@@ -2,24 +2,24 @@
 Django settings for your TOM project with the tom_education plugin.
 """
 
+import ast
 import os
 import sys
 import tempfile
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from django.utils.crypto import get_random_string
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SECRET_KEY = os.environ.get('SECRET_KEY','')
+if not SECRET_KEY:
+    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+    SECRET_KEY = get_random_string(50, chars)
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'False'))
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=z125%(yc62o36iz90jl73#hbd6pet_gy%e%=hf7#ccqg7(9!)'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -93,8 +93,11 @@ WSGI_APPLICATION = 'streams.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': os.environ.get('DB_HOST', ''),
+        'NAME': os.environ.get('DB_NAME', ''),
+        'USER': os.environ.get('DB_USER', ''),
+        'PASSWORD': os.environ.get('DB_PASS', ''),
     }
 }
 
@@ -149,8 +152,24 @@ DATE_FORMAT = 'Y-m-d'
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, '_static')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-MEDIA_ROOT = os.path.join(BASE_DIR, 'data')
-MEDIA_URL = '/data/'
+
+# Use AWS S3 for Media Files
+if ast.literal_eval(os.environ.get('USE_S3', 'False')):
+    # aws settings
+    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_REGION_NAME = os.getenv('AWS_DEFAULT_REGION', 'us-west-2')
+    AWS_DEFAULT_ACL = None
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+    AWS_S3_SIGNATURE_VERSION = 's3v4'
+    # s3 public media settings
+    PUBLIC_MEDIA_LOCATION = 'media'
+    MEDIA_URL = f'https://s3-{AWS_S3_REGION_NAME}.amazonaws.com/{AWS_STORAGE_BUCKET_NAME}/{PUBLIC_MEDIA_LOCATION}/'
+    DEFAULT_FILE_STORAGE = 'streams.storage_backends.PublicMediaStorage'
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'data')
+    MEDIA_URL = '/data/'
 
 LOGGING = {
     'version': 1,
@@ -221,7 +240,7 @@ TOM_FACILITY_CLASSES = [
 ]
 
 TOM_EDUCATION_TIMELAPSE_SETTINGS = {
-    'format': 'gif',
+    'format': 'webm',
     'fps': 10,
     'size': 500,
 }
@@ -257,7 +276,9 @@ THUMBNAIL_DEFAULT_SIZE = (200, 200)
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-try:
-    from local_settings import * # noqa
-except ImportError:
-    pass
+if not BASE_DIR.startswith('/app'):
+    try:
+        from .local_settings import *
+    except ImportError as e:
+        if "local_settings" not in str(e):
+            raise e
