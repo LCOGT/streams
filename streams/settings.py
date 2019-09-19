@@ -7,15 +7,9 @@ import os
 import sys
 import tempfile
 
-from django.utils.crypto import get_random_string
-
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.environ.get('SECRET_KEY','')
-if not SECRET_KEY:
-    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
-    SECRET_KEY = get_random_string(50, chars)
+SECRET_KEY = os.environ['SECRET_KEY']
 
 DEBUG = ast.literal_eval(os.environ.get('DEBUG', 'False'))
 
@@ -48,7 +42,6 @@ INSTALLED_APPS = [
     'tom_observations',
     'tom_dataproducts',
     'tom_astrosource',
-    'corsheaders'
 ]
 
 SITE_ID = 1
@@ -56,7 +49,6 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -251,10 +243,14 @@ TOM_EDUCATION_PIPELINES = {
     'astrosource': 'tom_astrosource.models.AstrosourceProcess'
 }
 
-# Example Dramatiq configuration using Redis on localhost:6379
+REDIS_HOSTNAME = os.environ['REDIS_HOSTNAME']
+
+# Example Dramatiq configuration using Redis
 DRAMATIQ_BROKER = {
     'BROKER': 'dramatiq.brokers.redis.RedisBroker',
-    'OPTIONS': {'url': 'redis://localhost:6379'},
+    'OPTIONS': {
+        'url': f'redis://{REDIS_HOSTNAME}:6379',
+    },
     'MIDDLEWARE': [
         'dramatiq.middleware.AgeLimit',
         'dramatiq.middleware.TimeLimit',
@@ -269,12 +265,6 @@ AUTO_THUMBNAILS = False
 THUMBNAIL_MAX_SIZE = (0, 0)
 
 THUMBNAIL_DEFAULT_SIZE = (200, 200)
-
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:5000',
-# ]
-
-CORS_ORIGIN_ALLOW_ALL = True
 
 if not BASE_DIR.startswith('/app'):
     try:

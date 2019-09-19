@@ -1,4 +1,5 @@
 django~=2.2.3
 tomtoolkit==0.8.0
 tom_education
-tom_astrosource=0.1.0
+tom_astrosource==0.1.0
+psycopg2==2.8.3
