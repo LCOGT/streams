@@ -233,7 +233,7 @@ TOM_FACILITY_CLASSES = [
 
 TOM_EDUCATION_TIMELAPSE_SETTINGS = {
     'format': 'webm',
-    'fps': 10,
+    'fps': 5,
     'size': 500,
 }
 
