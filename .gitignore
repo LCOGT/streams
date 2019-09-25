@@ -105,3 +105,6 @@ venv.bak/
 
 # TOM Toolkit specific
 data/
+
+docker-compose.yml
+dump.rdb

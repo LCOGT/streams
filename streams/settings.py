@@ -237,13 +237,16 @@ TOM_EDUCATION_TIMELAPSE_SETTINGS = {
     'size': 500,
 }
 
+HINTS_ENABLED = False
+HINT_LEVEL = 20
+
 TOM_EDUCATION_TIMELAPSE_GROUP_NAME = 'Good quality data'
 
 TOM_EDUCATION_PIPELINES = {
     'astrosource': 'tom_astrosource.models.AstrosourceProcess'
 }
 
-REDIS_HOSTNAME = os.environ['REDIS_HOSTNAME']
+REDIS_HOSTNAME = os.environ.get('REDIS_HOSTNAME','localhost')
 
 # Example Dramatiq configuration using Redis
 DRAMATIQ_BROKER = {
