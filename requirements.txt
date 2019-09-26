@@ -5,3 +5,5 @@ tom_astrosource==0.1.0
 psycopg2==2.8.3
 dramatiq[watch,redis]
 django-dramatiq
+boto3
+django-storages
