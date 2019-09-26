@@ -7,3 +7,4 @@ dramatiq[watch,redis]
 django-dramatiq
 boto3
 django-storages
+gunicorn[gevent]==19.9.0
