@@ -23,6 +23,7 @@ RUN apk --no-cache add \
             g++ \
             gcc \
             gfortran \
+            git \
             jpeg-dev \
             lapack-dev \
             libffi-dev \
