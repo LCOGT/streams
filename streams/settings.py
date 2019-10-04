@@ -244,7 +244,7 @@ TOM_EDUCATION_TIMELAPSE_GROUP_NAME = 'Good quality data'
 
 TOM_EDUCATION_PIPELINES = {
     'astrosource' : 'tom_astrosource.models.AstrosourceProcess',
-    'timelapse'   : 'tom_education.models.timelapse.TimelapsePipeline'
+    'Timelapse'   : 'tom_education.models.timelapse.TimelapsePipeline'
 }
 
 REDIS_HOSTNAME = os.environ.get('REDIS_HOSTNAME','localhost')
