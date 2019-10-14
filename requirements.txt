@@ -1,7 +1,7 @@
 django~=2.2.3
 tom_astrosource==0.1.1
 -e git+https://github.com/zemogle/tom_base.git@s3#egg=tomtoolkit
-tom_education==1.1.2
+tom_education==1.1.3
 fits2image==0.4.2
 psycopg2==2.8.3
 dramatiq[watch,redis]
@@ -9,3 +9,5 @@ django-dramatiq
 boto3
 django-storages
 gunicorn[gevent]==19.9.0
+django-cors-headers
+django-rest-framework

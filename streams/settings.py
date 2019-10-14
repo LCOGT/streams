@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
     'django_filters',
+    'rest_framework',
+    'corsheaders',
     'django_gravatar',
     'django_dramatiq',
     'tom_education',
@@ -49,6 +51,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -269,6 +272,8 @@ AUTO_THUMBNAILS = False
 THUMBNAIL_MAX_SIZE = (0, 0)
 
 THUMBNAIL_DEFAULT_SIZE = (200, 200)
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 if not BASE_DIR.startswith('/app'):
     try:
