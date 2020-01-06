@@ -206,6 +206,29 @@ TOM_ALERT_CLASSES = [
     'tom_alerts.brokers.mars.MARSBroker',
 ]
 
+DATA_PRODUCT_TYPES = {
+    'photometry': ('photometry', 'Photometry'),
+    'fits_file': ('fits_file', 'FITS File'),
+    'spectroscopy': ('spectroscopy', 'Spectroscopy'),
+    'image_file': ('image_file', 'Image File'),
+    'timelapse': ('timelapse','Timelapse')
+}
+
+DATA_PROCESSORS = {
+    'photometry': 'tom_dataproducts.processors.photometry_processor.PhotometryProcessor',
+    'spectroscopy': 'tom_dataproducts.processors.spectroscopy_processor.SpectroscopyProcessor',
+}
+
+TOM_ALERT_CLASSES = [
+    'tom_alerts.brokers.mars.MARSBroker',
+    'tom_alerts.brokers.lasair.LasairBroker',
+    'tom_alerts.brokers.scout.ScoutBroker',
+    'tom_alerts.brokers.tns.TNSBroker',
+]
+
+BROKER_CREDENTIALS = {
+}
+
 EXTRA_FIELDS = [
     {'name': 'active', 'type': 'boolean'},
     {'name': 'target_info', 'type': 'string', 'hidden': True},
@@ -221,13 +244,9 @@ OPEN_URLS = []
 
 HOOKS = {
     'target_post_save': 'tom_common.hooks.target_post_save',
-    'observation_change_state': 'tom_common.hooks.observation_change_state'
+    'observation_change_state': 'tom_common.hooks.observation_change_state',
+    'data_product_post_upload': 'tom_dataproducts.hooks.data_product_post_upload'
 }
-
-DATA_TYPES = (
-    ('SPECTROSCOPY', 'Spectroscopy'),
-    ('PHOTOMETRY', 'Photometry')
-)
 
 TOM_FACILITY_CLASSES = [
     'tom_observations.facilities.lco.LCOFacility',
