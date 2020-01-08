@@ -1,8 +1,8 @@
 django~=2.2.3
-tom_astrosource==0.1.1
--e git+https://github.com/zemogle/tom_base.git@s3#egg=tomtoolkit
-tom_education==1.1.3
-fits2image==0.4.2
+tom_astrosource>=0.1.2
+tomtoolkit==1.2.4
+tom_education==1.1.4
+fits2image==0.4.3
 psycopg2==2.8.3
 dramatiq[watch,redis]
 django-dramatiq
