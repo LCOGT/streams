@@ -1,4 +1,4 @@
-FROM python:3.7-alpine
+FROM python:3.8-alpine
 
 # Set working directory
 WORKDIR /app
@@ -11,6 +11,7 @@ RUN apk --no-cache add \
             freetype \
             jpeg \
             lapack \
+            openblas \
             libffi \
             libgfortran \
             libgomp \
@@ -19,6 +20,7 @@ RUN apk --no-cache add \
             postgresql-libs \
             zlib \
         && apk --no-cache add --virtual .build-deps \
+            cython \
             freetype-dev \
             g++ \
             gcc \
@@ -28,10 +30,15 @@ RUN apk --no-cache add \
             lapack-dev \
             libffi-dev \
             musl-dev \
+            openblas-dev \
+            python3-dev \
             postgresql-dev \
             zlib-dev \
-        && pip --no-cache-dir install -r requirements.txt \
-        && apk --no-cache del .build-deps
+    && pip --no-cache-dir install "numpy==1.18.1" \
+    && pip --no-cache-dir install "scipy<1.4.0" \
+    && pip --no-cache-dir install "astropy==4.0" \
+    && pip --no-cache-dir install -r requirements.txt \
+    && apk --no-cache del .build-deps
 
 # Install application
 COPY . .

@@ -1,6 +1,6 @@
 django~=2.2.3
 tom_astrosource>=0.1.2
-tomtoolkit==1.2.4
+tomtoolkit
 tom_education==1.1.4
 fits2image==0.4.3
 psycopg2==2.8.3
