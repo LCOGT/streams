@@ -34,9 +34,6 @@ RUN apk --no-cache add \
             python3-dev \
             postgresql-dev \
             zlib-dev \
-    && pip --no-cache-dir install "numpy==1.18.1" \
-    && pip --no-cache-dir install "scipy<1.4.0" \
-    && pip --no-cache-dir install "astropy==4.0" \
     && pip --no-cache-dir install -r requirements.txt \
     && apk --no-cache del .build-deps
 
