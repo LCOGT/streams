@@ -2,9 +2,9 @@ numpy==1.18.1
 scipy<1.4.0
 astropy==4.0
 django~=2.2.3
-tom_astrosource>=0.1.2
+tom_astrosource>=0.1.4
 tomtoolkit
-tom_education==1.1.4
+tom_education==1.1.5
 fits2image==0.4.3
 psycopg2==2.8.3
 dramatiq[watch,redis]

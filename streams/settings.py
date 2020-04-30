@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'tom_catalogs',
     'tom_observations',
     'tom_dataproducts',
+    'tom_publications',
     'tom_astrosource',
 ]
 
@@ -211,6 +212,7 @@ DATA_PRODUCT_TYPES = {
     'fits_file': ('fits_file', 'FITS File'),
     'spectroscopy': ('spectroscopy', 'Spectroscopy'),
     'image_file': ('image_file', 'Image File'),
+    'plot' : ('plot', 'Plot File'),
     'timelapse': ('timelapse','Timelapse')
 }
 
@@ -253,6 +255,8 @@ TOM_FACILITY_CLASSES = [
     'tom_education.facilities.EducationLCOFacility'
 ]
 
+TARGET_PERMISSIONS_ONLY = False
+
 TOM_EDUCATION_TIMELAPSE_SETTINGS = {
     'format': 'webm',
     'fps': 5,
@@ -293,6 +297,31 @@ THUMBNAIL_MAX_SIZE = (0, 0)
 THUMBNAIL_DEFAULT_SIZE = (200, 200)
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'WARNING',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'ERROR',
+        }
+    },
+}
+
 
 if not BASE_DIR.startswith('/app'):
     try:
