@@ -42,6 +42,7 @@ RUN apt-get -y update \
         && apt-get -y --no-install-recommends install \
             libgomp1 \
             libpq5 \
+            ffmpeg \
         && apt-get -y clean
 
 # Make the virtualenv the first thing in the PATH so that everything in our
