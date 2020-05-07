@@ -4,7 +4,7 @@ astropy
 django~=2.2.3
 tom_astrosource>=0.1.4
 tomtoolkit
-tom_education>=1.1.8
+tom_education>=1.1.9
 fits2image==0.4.3
 psycopg2
 dramatiq[watch,redis]
